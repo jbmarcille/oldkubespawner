@@ -149,6 +149,11 @@ class ApiClient(object):
                                      post_params=post_params, body=body)
 
         self.last_response = response_data
+        #log raw response data if any
+        with open('api_response.log', 'a') as out:
+            out.write('Response data:\n')
+            out.write('%s\n', response_data)
+            out.write('____________________________\n')
 
         # deserialize response data
         if response_type:
