@@ -151,8 +151,11 @@ class ApiClient(object):
         self.last_response = response_data
         #log raw response data if any
         with open('api_response.log', 'a') as out:
+            out.write('Request:\n')
+            out.write('    Method: %s\n', method)
+            out.write('    Url   : %s\n', url)
             out.write('Response data:\n')
-            out.write('%s\n', response_data)
+            out.write('    %s\n', response_data)
             out.write('____________________________\n')
 
         # deserialize response data
