@@ -149,18 +149,17 @@ class ApiClient(object):
                                      post_params=post_params, body=body)
 
         self.last_response = response_data
-        #log raw response data if any
-        with open('api_response.log', 'a') as out:
-            out.write('Request:\n')
-            out.write('    Method: %s\n' % (method))
-            out.write('    Url   : %s\n' % (url))
-            out.write('Response data:\n')
-            out.write('    %s\n' % (response_data))
-            out.write('____________________________\n')
 
         # deserialize response data
         if response_type:
             deserialized_data = self.deserialize(response_data, response_type)
+            with open('api_response.log', 'a') as out:
+               out.write('Request:\n')
+               out.write('    Method: %s\n' % (method))
+               out.write('    Url   : %s\n' % (url))
+               out.write('Response:\n')
+               out.write('    %s\n' % (deserialized_data))
+               out.write('____________________________\n')
         else:
             deserialized_data = None
 
