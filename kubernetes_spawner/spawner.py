@@ -261,9 +261,14 @@ class KubernetesSpawner(Spawner):
         elif self.hub_ip_from_service:
             self.log.debug('Looking for Hub IP from service name: \'%s\'', self.hub_ip_from_service)
             api_service = self.client.get_service(self.hub_ip_from_service)
-            self.log.debug('%s', api_service)
-            ip = api_service.status.load_balancer.ingress[0].ip
-            port = None
+            self.log.debug('Hub API URL: %s', self.hub.api_url)
+            self.log.debug('API service: %s', api_service)
+            if (api_service.spec.load_balancer_ip):
+                ip = api_service.status.load_balancer.ingress[0].ip
+                port = None
+            else:
+                ip = api_service.spec.cluster_ip
+                port = None
         else:
             return self.hub.api_url
 
